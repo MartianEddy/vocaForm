@@ -17,7 +17,20 @@
     "jspdf": "^2.5.1",
     "html2canvas": "^1.4.1",
     "date-fns": "^2.30.0",
-    "clsx": "^2.0.0"
+    "clsx": "^2.0.0",
+    "@supabase/supabase-js": "^2.38.4",
+    "@supabase/auth-helpers-react": "^0.4.2",
+    "elevenlabs": "^0.8.1",
+    "mixpanel-browser": "^2.47.0",
+    "react-hotjar": "^6.0.1",
+    "posthog-js": "^1.96.1",
+    "stripe": "^14.9.0",
+    "@stripe/stripe-js": "^2.2.2",
+    "react-query": "^3.39.3",
+    "zustand": "^4.4.7",
+    "react-hook-form": "^7.48.2",
+    "zod": "^3.22.4",
+    "@hookform/resolvers": "^3.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
