@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Edit3, Check, X } from 'lucide-react'
+import { Edit3, Check, X, Volume2 } from 'lucide-react'
 import { FormField as FormFieldType } from '../contexts/FormContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import VoiceRecorder from './VoiceRecorder'
+import ConfidenceIndicator from './ConfidenceIndicator'
 
 interface FormFieldProps {
   field: FormFieldType
@@ -25,7 +26,7 @@ export default function FormField({ field, onUpdate, isActive = false }: FormFie
   }
 
   const handleSaveEdit = () => {
-    onUpdate(editValue)
+    onUpdate(editValue, 1.0) // Manual edits have 100% confidence
     setIsEditing(false)
   }
 
@@ -77,11 +78,12 @@ export default function FormField({ field, onUpdate, isActive = false }: FormFie
     )
   }
 
-  const getConfidenceColor = (confidence?: number) => {
-    if (!confidence) return 'text-gray-400'
-    if (confidence > 0.8) return 'text-green-600'
-    if (confidence > 0.6) return 'text-yellow-600'
-    return 'text-red-600'
+  const getConfidenceLevel = (confidence?: number): 'high' | 'medium' | 'low' | 'very-low' => {
+    if (!confidence) return 'very-low'
+    if (confidence >= 0.85) return 'high'
+    if (confidence >= 0.65) return 'medium'
+    if (confidence >= 0.45) return 'low'
+    return 'very-low'
   }
 
   return (
@@ -94,10 +96,11 @@ export default function FormField({ field, onUpdate, isActive = false }: FormFie
             {field.required && <span className="text-red-500 ml-1">*</span>}
           </label>
           
-          {field.confidence && (
-            <span className={`text-sm font-medium ${getConfidenceColor(field.confidence)}`}>
-              {Math.round(field.confidence * 100)}% confidence
-            </span>
+          {field.confidence !== undefined && (
+            <ConfidenceIndicator
+              confidence={field.confidence}
+              level={getConfidenceLevel(field.confidence)}
+            />
           )}
         </div>
 
@@ -137,6 +140,15 @@ export default function FormField({ field, onUpdate, isActive = false }: FormFie
                 {field.value ? (
                   <div className="bg-gray-50 rounded-lg p-4 border">
                     <p className="text-gray-900">{field.value}</p>
+                    {field.confidence !== undefined && field.confidence < 0.65 && (
+                      <div className="mt-2">
+                        <ConfidenceIndicator
+                          confidence={field.confidence}
+                          level={getConfidenceLevel(field.confidence)}
+                          showDetails={true}
+                        />
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="bg-gray-50 rounded-lg p-4 border border-dashed border-gray-300">
@@ -157,6 +169,20 @@ export default function FormField({ field, onUpdate, isActive = false }: FormFie
             </div>
           )}
         </div>
+
+        {/* Voice Input Hint */}
+        {isActive && !isEditing && !field.value && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="flex items-center space-x-2 text-blue-700">
+              <Volume2 className="h-4 w-4" />
+              <span className="text-sm font-medium">Voice Input Active</span>
+            </div>
+            <p className="text-sm text-blue-600 mt-1">
+              Click the microphone above and speak your {field.label.toLowerCase()}. 
+              The system will automatically detect and transcribe your speech.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

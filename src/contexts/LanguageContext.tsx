@@ -42,6 +42,19 @@ const translations = {
     'form.next': 'Next Field',
     'form.previous': 'Previous Field',
     'form.complete': 'Complete Form',
+    'form.retry': 'Retry Recording',
+    'form.playback': 'Play Back',
+    'form.alternatives': 'Alternative Suggestions',
+    
+    // Voice recognition
+    'voice.highConfidence': 'High Confidence',
+    'voice.mediumConfidence': 'Medium Confidence',
+    'voice.lowConfidence': 'Low Confidence',
+    'voice.veryLowConfidence': 'Very Low Confidence',
+    'voice.noiseDetected': 'Background noise detected',
+    'voice.clearAudio': 'Audio is clear',
+    'voice.retryPrompt': 'Low confidence detected. Try speaking more clearly.',
+    'voice.languageSettings': 'Language & Accent Settings',
     
     // Templates
     'template.ntsa': 'NTSA Driver\'s License',
@@ -101,6 +114,19 @@ const translations = {
     'form.next': 'Uga Unaofuata',
     'form.previous': 'Uga wa Awali',
     'form.complete': 'Maliza Fomu',
+    'form.retry': 'Jaribu Tena Kurekodi',
+    'form.playback': 'Cheza Tena',
+    'form.alternatives': 'Mapendekezo Mengine',
+    
+    // Voice recognition
+    'voice.highConfidence': 'Uhakika wa Juu',
+    'voice.mediumConfidence': 'Uhakika wa Kati',
+    'voice.lowConfidence': 'Uhakika wa Chini',
+    'voice.veryLowConfidence': 'Uhakika wa Chini Sana',
+    'voice.noiseDetected': 'Kelele za nyuma zimegunduliwa',
+    'voice.clearAudio': 'Sauti ni wazi',
+    'voice.retryPrompt': 'Uhakika wa chini umegunduliwa. Jaribu kuzungumza kwa uwazi zaidi.',
+    'voice.languageSettings': 'Mipangilio ya Lugha na Lafudhi',
     
     // Templates
     'template.ntsa': 'Leseni ya Udereva NTSA',
