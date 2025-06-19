@@ -10,33 +10,107 @@
   body {
     @apply bg-gray-50 text-gray-900;
   }
+
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    :root {
+      --primary-50: #000000;
+      --primary-100: #1a1a1a;
+      --primary-600: #ffffff;
+      --primary-700: #ffffff;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Focus indicators */
+  *:focus {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Large text support */
+  .large-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .extra-large-text {
+    font-size: 1.5rem;
+    line-height: 1.7;
+  }
 }
 
 @layer components {
+  /* Accessible button styles */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-primary-500 focus:ring-offset-2 min-h-[56px] text-lg;
+    touch-action: manipulation;
   }
   
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+    @apply bg-gray-200 hover:bg-gray-300 active:bg-gray-400 text-gray-800 font-bold py-4 px-8 rounded-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 min-h-[56px] text-lg;
+    touch-action: manipulation;
   }
   
   .btn-danger {
-    @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+    @apply bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-offset-2 min-h-[56px] text-lg;
+    touch-action: manipulation;
   }
-  
+
+  /* Large touch-friendly buttons */
+  .btn-large {
+    @apply py-6 px-12 text-xl min-h-[72px] rounded-2xl;
+  }
+
+  /* Icon buttons */
+  .btn-icon {
+    @apply p-4 rounded-xl min-h-[56px] min-w-[56px] flex items-center justify-center;
+  }
+
+  /* Accessible form inputs */
   .form-input {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
+    @apply w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 text-lg min-h-[56px];
   }
   
   .form-label {
-    @apply block text-sm font-medium text-gray-700 mb-2;
+    @apply block text-lg font-bold text-gray-700 mb-3;
   }
   
+  /* Card styles */
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
+    @apply bg-white rounded-2xl shadow-sm border-2 border-gray-200 p-8;
   }
-  
+
+  /* High contrast mode */
+  .high-contrast {
+    @apply bg-black text-white;
+  }
+
+  .high-contrast .btn-primary {
+    @apply bg-white text-black border-4 border-white;
+  }
+
+  .high-contrast .btn-secondary {
+    @apply bg-gray-800 text-white border-4 border-white;
+  }
+
+  .high-contrast .form-input {
+    @apply bg-white text-black border-4 border-white;
+  }
+
+  .high-contrast .card {
+    @apply bg-gray-900 text-white border-4 border-white;
+  }
+
+  /* Recording animation */
   .recording-pulse {
     animation: pulse 1.5s ease-in-out infinite;
   }
@@ -44,27 +118,28 @@
   @keyframes pulse {
     0%, 100% {
       opacity: 1;
+      transform: scale(1);
     }
     50% {
-      opacity: 0.5;
+      opacity: 0.7;
+      transform: scale(1.05);
     }
   }
-}
 
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-  .recording-pulse {
-    animation: none;
+  /* Touch feedback */
+  .touch-feedback:active {
+    transform: scale(0.95);
+  }
+
+  /* Skip link */
+  .skip-link {
+    @apply absolute -top-40 left-6 bg-primary-600 text-white px-4 py-2 rounded-lg z-50 focus:top-6;
   }
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .btn-primary {
-    @apply border-2 border-primary-800;
-  }
-  
-  .form-input {
-    @apply border-2 border-gray-600;
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
   }
 }
