@@ -8,11 +8,13 @@ import { DynamicFormProvider } from './contexts/DynamicFormContext'
 import { analytics, trackWebVitals } from './lib/analytics'
 import { paymentService } from './lib/stripe'
 import AccessibleLayout from './components/AccessibleLayout'
+import MobileNavigation from './components/MobileNavigation'
 import AccessibleHome from './pages/AccessibleHome'
 import AuthPage from './pages/AuthPage'
 import AgentLogin from './pages/AgentLogin'
 import AgentDashboard from './pages/AgentDashboard'
 import FormFilling from './pages/FormFilling'
+import MobileFormFilling from './pages/MobileFormFilling'
 import DynamicFormFilling from './pages/DynamicFormFilling'
 import FormTemplates from './pages/FormTemplates'
 import ClientSession from './pages/ClientSession'
@@ -32,6 +34,9 @@ function App() {
     analytics.trackPageView('app_loaded')
   }, [])
 
+  // Detect if user is on mobile device
+  const isMobile = window.innerWidth <= 768 || 'ontouchstart' in window
+
   return (
     <AccessibilityProvider>
       <LanguageProvider>
@@ -45,10 +50,14 @@ function App() {
                   <Route path="/agent/login" element={<AgentLogin />} />
                   <Route path="/agent/dashboard" element={<AgentDashboard />} />
                   <Route path="/templates" element={<FormTemplates />} />
-                  <Route path="/form/:templateId" element={<FormFilling />} />
+                  <Route 
+                    path="/form/:templateId" 
+                    element={isMobile ? <MobileFormFilling /> : <FormFilling />} 
+                  />
                   <Route path="/dynamic-form/:templateId" element={<DynamicFormFilling />} />
                   <Route path="/client/:sessionId" element={<ClientSession />} />
                 </Routes>
+                {isMobile && <MobileNavigation />}
               </AccessibleLayout>
             </DynamicFormProvider>
           </FormProvider>
