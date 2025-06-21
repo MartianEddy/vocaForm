@@ -2,6 +2,7 @@ import mixpanel from 'mixpanel-browser'
 import { hotjar } from 'react-hotjar'
 import posthog from 'posthog-js'
 import { supabaseHelpers } from './supabase'
+import { supabase } from './supabase'
 
 // Initialize analytics services
 const MIXPANEL_TOKEN = import.meta.env.VITE_MIXPANEL_TOKEN
@@ -82,11 +83,17 @@ class AnalyticsService {
 
     // Store in Supabase for internal analytics
     try {
-      await supabaseHelpers.trackEvent({
-        user_id: this.userId,
+      // Get current authenticated user
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      // Only set user_id if there's an authenticated user, otherwise leave it null
+      const analyticsEvent = {
+        user_id: user?.id || null,
         event_type: eventName,
         event_data: eventData
-      })
+      }
+
+      await supabaseHelpers.trackEvent(analyticsEvent)
     } catch (error) {
       console.error('Failed to store analytics event:', error)
     }
